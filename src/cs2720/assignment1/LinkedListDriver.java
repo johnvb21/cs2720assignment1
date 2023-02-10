@@ -23,10 +23,10 @@ public class LinkedListDriver {
             // worry about sorting here because the linkedList.insert() already does this.
             while(scan1.hasNext()) {
             //linkedList.insert(scan1.nextInt());
-                System.out.println(scan1.nextInt() + " ");
+                System.out.print(scan1.nextInt() + " ");
             } // while
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.print("File not found");
         }
 
         // Boolean variable to control the menu.
@@ -37,6 +37,7 @@ public class LinkedListDriver {
 
         while(again) {
 
+            System.out.println();
             System.out.println("Commands:");
             System.out.println("(i) - Insert value");
             System.out.println("(d) - Delete value");
@@ -50,6 +51,8 @@ public class LinkedListDriver {
             System.out.println("(l) - Print length");
             System.out.println("(q) - Quit program");
 
+            System.out.println("Enter a command: ");
+
             String input = scan2.next();
 
 
@@ -57,24 +60,36 @@ public class LinkedListDriver {
             switch (input) {
 
             case "i":
+                System.out.println("Enter a number to insert: ");
+                System.out.println("Original list: ");
+                System.out.println("New list: ");
                 break;
             case "d":
+                System.out.println("Enter a number to delete: ");
+                System.out.println("Original list: ");
+                System.out.println("New list: ");
                 break;
             case "s":
+                System.out.println("You want to search for a value");
                 break;
             case "n":
+                System.out.println("You want to print the next iterator value");
                 break;
             case "r":
+                System.out.println("You want to reset the iterator");
                 break;
             case "a":
+                System.out.println("You want to delete alternate nodes");
                 break;
             case "m":
+                System.out.println("You want to merge lists");
                 break;
             case "t":
+                System.out.println("You want to find the intersection");
                 break;
-            case "p":
+            case "p": System.out.println("The list is: ");
                 break;
-            case "l":
+            case "l": System.out.println("The length of the list is ");
                 break;
             case "q":
                 again = false;
