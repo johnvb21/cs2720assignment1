@@ -4,8 +4,8 @@ public class NodeType {
     public ItemType info;
     public NodeType next;
 
-    public NodeType() {
-        this.info = null;
+    public NodeType(ItemType item) {
+        this.info = item;
         this.next = null;
     }
 } // NodeType
