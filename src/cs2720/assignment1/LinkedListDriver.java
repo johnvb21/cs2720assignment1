@@ -68,7 +68,7 @@ public class LinkedListDriver {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Enter a number to search: ");
                 int searchValue = scanner.nextInt();
-                //linkedList.search(searchValue);
+                linkedList.searchItem(new ItemType(searchValue));
                 break;
             case "n":
                 System.out.println("You want to print the next iterator value");
@@ -84,11 +84,13 @@ public class LinkedListDriver {
                 linkedList.merge();
                 break;
             case "t":
-                System.out.println("You want to find the intersection");
+                linkedList.intersection();
                 break;
             case "p": System.out.println("The list is: ");
+                linkedList.printList();
                 break;
-            case "l": System.out.println("The length of the list is ");
+            case "l": System.out.print("The length of the list is ");
+                linkedList.getLength();
                 break;
             case "q":
                 again = false;

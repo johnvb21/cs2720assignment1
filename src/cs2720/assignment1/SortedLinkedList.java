@@ -102,9 +102,37 @@ public class SortedLinkedList {
         } // while
     } // deleteItem
 
-
+    // method for searching for an item
     public int searchItem(ItemType item) {
-        return 0;
+
+        if (this.getLength() == 0) {
+            System.out.println("The list is empty");
+            return -1;
+        }
+        else {
+            NodeType node = head;
+            int index = 0;
+
+            while (node.next != null) {
+
+                if (node.info.compareTo(item) == 0) {
+                    System.out.println("The item is present at index " + index);
+                    return index;
+                } // if
+
+                index++;
+                node = node.next;
+            } // while
+
+            if (node.info.compareTo(item) == 0) {
+                System.out.println("The item is present at index " + index);
+                return index;
+            } // if
+
+
+            System.out.println("Item is not present in the list");
+            return -1;
+        } // if - esle
     } // searchItem
 
 
@@ -165,8 +193,55 @@ public class SortedLinkedList {
 
     public void intersection() {
 
+      // Part#1 Ask for length of new list//
+/*------------------------------------------------*/
+        Scanner scan1 = new Scanner(System.in);
+        System.out.print("Enter the length of the new list: ");
+        int length = scan1.nextInt();
 
 
+       // Part#2 Ask for numbers in new list//
+/*------------------------------------------------*/
+        int[] values = new int[length];
+        System.out.print("Enter the new numbers ");
+
+        SortedLinkedList linkedList = new SortedLinkedList();
+
+        for (int i = 0; i < length; i++) {
+            values[i] = scan1.nextInt();
+            linkedList.insertItem(new ItemType(values[i]));
+        } // for
+
+
+      //Part#3 Print current list//
+/*------------------------------------------------*/
+        System.out.print("List 1: ");
+        this.printList();
+
+
+      //Part#4 Print new list to be merged//
+/*------------------------------------------------*/
+        System.out.print("List 2: ");
+
+        linkedList.printList();
+
+        System.out.println();
+
+
+      //Part#5 Intersect the lists//
+/*------------------------------------------------*/
+
+      linkedList.resetList();
+      for (int i = 0; i < values.length; i++) {
+          if (this.searchItem(new ItemType(values[i])) != -1) {
+            linkedList.insertItem(new ItemType(values[i]));
+          } // if
+        } // for
+
+      //Part#6 Print intersected list//
+/*------------------------------------------------*/
+      System.out.print("Intersection of lists: ");
+      linkedList.printList();
 
     } // intersection
 
