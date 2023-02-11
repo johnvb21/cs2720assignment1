@@ -160,8 +160,11 @@ public class SortedLinkedList {
         int[] values = new int[length];
         System.out.print("Enter the new numbers ");
 
+        SortedLinkedList linkedList = new SortedLinkedList();
+
         for (int i = 0; i < length; i++) {
             values[i] = scan1.nextInt();
+            linkedList.insertItem(new ItemType(values[i]));
         } // for
 
         //Part#3 Print current list//
@@ -173,9 +176,8 @@ public class SortedLinkedList {
 /*------------------------------------------------*/
         System.out.print("List 2: ");
 
-        for (int i = 0; i < values.length; i++) {
-            System.out.print(values[i] + " ");
-        } // for
+        linkedList.printList();
+
         System.out.println();
 
         //Part#5 Merge the lists//
