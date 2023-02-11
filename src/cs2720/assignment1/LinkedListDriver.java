@@ -1,4 +1,4 @@
-package cs2720.assignment1;
+ package cs2720.assignment1;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,8 +22,7 @@ public class LinkedListDriver {
             // Taking numbers from the file and adding them to our linkedList. We don't need to
             // worry about sorting here because the linkedList.insert() already does this.
             while(scan1.hasNext()) {
-            //linkedList.insert(scan1.nextInt());
-                System.out.print(scan1.nextInt() + " ");
+                linkedList.insertItem(new ItemType(scan1.nextInt()));
             } // while
         } catch (FileNotFoundException e) {
             System.out.print("File not found");
@@ -60,17 +59,16 @@ public class LinkedListDriver {
             switch (input) {
 
             case "i":
-                System.out.println("Enter a number to insert: ");
-                System.out.println("Original list: ");
-                System.out.println("New list: ");
+                //linkedList.insertItem();
                 break;
             case "d":
-                System.out.println("Enter a number to delete: ");
-                System.out.println("Original list: ");
-                System.out.println("New list: ");
+                //linkedList.deleteItem();
                 break;
             case "s":
-                System.out.println("You want to search for a value");
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Enter a number to search: ");
+                int searchValue = scanner.nextInt();
+                //linkedList.search(searchValue);
                 break;
             case "n":
                 System.out.println("You want to print the next iterator value");
@@ -83,6 +81,7 @@ public class LinkedListDriver {
                 break;
             case "m":
                 System.out.println("You want to merge lists");
+                linkedList.merge();
                 break;
             case "t":
                 System.out.println("You want to find the intersection");
@@ -101,24 +100,5 @@ public class LinkedListDriver {
 
         } // while
     } // main
-
-    // Bubble sort method to sort file input before becoming a Linked list
-    // Maybe not necessary...maybe  better to just insert these into an empty linked list and let
-    // the insert method take care of the sorting.
-    /*
-    private static int[] sort(int[] unsorted) {
-        int n = unsorted.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (unsorted[j] > unsorted[j+1]) {
-                    int temp = unsorted[j];
-                    unsorted[j] = unsorted[j + 1];
-                    unsorted[j + 1] = temp;
-                } // if
-            } // for
-        } // for
-        return unsorted;
-    } // sort
-    */
 
 } // LinkedListDriver
