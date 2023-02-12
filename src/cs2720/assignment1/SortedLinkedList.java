@@ -7,9 +7,10 @@ public class SortedLinkedList {
     private NodeType head;
     private NodeType predloc;
     private NodeType currentPos;
-
+    private NodeType iterator;
     // constructor method
     public SortedLinkedList() {
+        this.iterator = head;
         this.head = null;
         this.currentPos = null;
     } // SortedLinkedList
@@ -36,6 +37,9 @@ public class SortedLinkedList {
     public void printList() {
 
         NodeType temp = currentPos;
+
+
+
         currentPos = head;
         while (currentPos != null) {
             System.out.print(currentPos.info.getValue() + " ");
@@ -62,6 +66,7 @@ public class SortedLinkedList {
                 this.head = new NodeType(item);
                 currentPos = this.head;
                 predloc = this.head;
+                iterator = head;
             // checks if this.head is greater than item
             } else if (this.head.info.compareTo(item) == 1) {
                 NodeType node = new NodeType(item);
@@ -195,15 +200,15 @@ public class SortedLinkedList {
 // method to get next item
     public ItemType getNextItem() {
         ItemType item = new ItemType(0);
-        if (this.head == null || currentPos == null) {
+        if (this.head == null || iterator == null) {
             System.out.println("List is empty");
             item = null;
-        } else if (currentPos == null) {
+        } else if (iterator.next == null) {
             System.out.println("The end of the list has been reached");
             item = null;
         } else {
-            item = currentPos.next.info;
-            currentPos = currentPos.next;
+            item = iterator.info;
+            iterator = iterator.next;
         } // else
         return item;
     } // getNextItem
@@ -222,14 +227,14 @@ public class SortedLinkedList {
         // Part#1 Ask for length of new list//
         /*----------------------------------*/
         Scanner scan1 = new Scanner(System.in);
-        System.out.print("Enter the length of the new list: ");
+        System.out.print("\tEnter the length of the new list: ");
         int length = scan1.nextInt();
 
 
         //Part#2 Ask for numbers in new list//
         /*----------------------------------*/
         int[] values = new int[length];
-        System.out.print("Enter the new numbers: ");
+        System.out.print("\tEnter the new numbers: ");
 
         SortedLinkedList linkedList = new SortedLinkedList();
 
@@ -255,12 +260,12 @@ public class SortedLinkedList {
 
         //Part#3 Print current list//
         /*-------------------------*/
-        System.out.print("List 1: ");
+        System.out.print("\tList 1: ");
         this.printList();
 
         //Part#4 Print new list to be merged//
         /*----------------------------------*/
-        System.out.print("List 2: ");
+        System.out.print("\tList 2: ");
 
         linkedList.printList();
 
@@ -280,7 +285,7 @@ public class SortedLinkedList {
 
         //Part#6 Print merged list//
         /*------------------------*/
-        System.out.print("Merged List: ");
+        System.out.print("\tMerged List: ");
          this.printList();
 
          // removes merged items from list
@@ -319,14 +324,14 @@ public class SortedLinkedList {
       // Part#1 Ask for length of new list//
       /*----------------------------------*/
         Scanner scan1 = new Scanner(System.in);
-        System.out.print("Enter the length of the new list: ");
+        System.out.print("\tEnter the length of the new list: ");
         int length = scan1.nextInt();
 
 
       // Part#2 Ask for numbers in new list//
       /*-----------------------------------*/
         int[] values = new int[length];
-        System.out.print("Enter the new numbers: ");
+        System.out.print("\tEnter the new numbers: ");
 
         SortedLinkedList linkedList = new SortedLinkedList();
 
@@ -338,13 +343,13 @@ public class SortedLinkedList {
 
       //Part#3 Print current list//
       /*-------------------------*/
-        System.out.print("List 1: ");
+        System.out.print("\tList 1: ");
         this.printList();
 
 
       //Part#4 Print new list to be merged//
       /*----------------------------------*/
-        System.out.print("List 2: ");
+        System.out.print("\tList 2: ");
 
         linkedList.printList();
 
@@ -365,7 +370,7 @@ public class SortedLinkedList {
 
       //Part#6 Print intersected list//
       /*-----------------------------*/
-      System.out.print("Intersection of lists: ");
+      System.out.print("\tIntersection of lists: ");
       intersectedList.printList();
 
     } // intersection
@@ -373,25 +378,35 @@ public class SortedLinkedList {
 
     // method to delete alternate nodes
     public void deleteAlternate() {
-        currentPos = this.head;
-        predloc = this.head;
-        while (currentPos != null) {
-            try {
-            currentPos = currentPos.next;
-            NodeType node = currentPos.next;
-            predloc.next = currentPos.next;
-            currentPos = node;
-            predloc = currentPos;
-            } catch (Exception e) {
-                currentPos = null;
-            } // catch
-        } // while
+
+        if (this.getLength() == 0) {
+
+            System.out.println("\tThe list is empty");
+        } // if
+        else {
+
+
+            currentPos = this.head;
+            predloc = this.head;
+            while (currentPos != null) {
+                try {
+                    currentPos = currentPos.next;
+                    NodeType node = currentPos.next;
+                    predloc.next = currentPos.next;
+                    currentPos = node;
+                    predloc = currentPos;
+                } catch (Exception e) {
+                    currentPos = null;
+                } // catch
+            } // while
+
+        } // if-else
 
     } // deleteAlternate
 
     // method to reset the iterator
     public void resetIterator() {
-      currentPos = head;
+      iterator = head;
       System.out.println("\tIterator is reset");
     }
 

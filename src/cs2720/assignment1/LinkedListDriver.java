@@ -70,7 +70,6 @@ public class LinkedListDriver {
                 linkedList.insertItem(item1);
                 System.out.print("\tNew List: ");
                 linkedList.printList();
-
                 break;
             case "d":
                 Scanner scan4 = new Scanner(System.in);
@@ -131,6 +130,7 @@ public class LinkedListDriver {
                 break;
             case "q":
                 again = false;
+                System.out.println("Exiting the program...");
                 break;
             default:
                 System.out.println("\tInvalid command, try again!");
