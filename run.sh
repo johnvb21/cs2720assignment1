@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 javac -d bin -cp bin src/cs2720/assignment1/ItemType.java
 javac -d bin -cp bin src/cs2720/assignment1/NodeType.java

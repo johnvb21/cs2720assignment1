@@ -1,6 +1,5 @@
 package cs2720.assignment1;
 
-import java.lang.Integer;
 import java.util.Scanner;
 
 public class SortedLinkedList {
@@ -8,10 +7,10 @@ public class SortedLinkedList {
     private NodeType predloc;
     private NodeType currentPos;
 
+    // constructor method
     public SortedLinkedList() {
         this.head = null;
         this.currentPos = null;
-
     } // SortedLinkedList
 
     // method for getting the length of the linkedlist
@@ -25,6 +24,7 @@ public class SortedLinkedList {
             length++;
             currentPos = currentPos.next;
         } // while
+
         return length;
     } // getLength
 
@@ -37,76 +37,118 @@ public class SortedLinkedList {
         while (currentPos != null) {
             System.out.print(currentPos.info.getValue() + " ");
             currentPos = currentPos.next;
-        } // for
+        } // while
         System.out.println();
     } // printList
 
 
 
-
-    // method for inserting an item into the list
+    // method for inserting into a linked list
     public void insertItem(ItemType item) {
-        if (getLength() > 1) {
-            predloc = this.head;
-            currentPos = predloc.next;
-        }
-        // check if the list is empty
-        if (this.head == null) {
-            this.head = new NodeType(item);
-            currentPos = this.head;
-            predloc = this.head;
-            return;
-        } // if
-        // checks if the item is less than head
-        if (this.head.info.compareTo(item) == 1) {
-            NodeType node = new NodeType(item);
-            node.next = this.head;
-            this.head = node;
-            predloc = this.head;
-            currentPos = predloc.next;
-            return;
-        } // if
-        // sees if current position is less than item, if so, it moves forward
-        while (currentPos.next != null) {
-            if (currentPos.info.compareTo(item) == -1) {
-                predloc = currentPos;
-                currentPos = predloc.next;
-            } // if
-            if (currentPos.info.compareTo(item) == 1) {
-                NodeType node = new NodeType(item);
-                predloc.next = node;
-                node.next = currentPos;
-                break;
-            } // if
-        } // while
+        if ((searchItem(item) != -2) && (searchItem(item) != -1)) {
+             System.out.println("\tItem already exists");
 
-        if (currentPos.next == null && (currentPos.info.compareTo(item) == -1)) {
-            currentPos.next = new NodeType(item);
-        } // if
+        } else {
+            if (getLength() > 1) {
+                predloc = this.head;
+                currentPos = predloc.next;
+            }
+            // check if the list is empty
+            if (this.head == null) {
+                this.head = new NodeType(item);
+                currentPos = this.head;
+                predloc = this.head;
+            // checks if this.head is greater than item
+            } else if (this.head.info.compareTo(item) == 1) {
+                NodeType node = new NodeType(item);
+                node.next = this.head;
+                this.head = node;
+                predloc = this.head;
+                currentPos = predloc.next;
+
+            } else {
+                // sees if current position is less than item, if so, it moves forward
+                while (currentPos.next != null) {
+                    if (currentPos.info.compareTo(item) == -1) {
+                        predloc = currentPos;
+                        currentPos = predloc.next;
+
+                    } // if
+                    // if currentPos is greater than item, the item is inserted between
+                    // predloc and currentPos
+                    if (currentPos.info.compareTo(item) == 1) {
+                        NodeType node = new NodeType(item);
+                        predloc.next = node;
+                        node.next = currentPos;
+                        break;
+                    } // if
+
+
+
+                } // while
+                // This is responsible for ensuring that the end of the list is updated
+                if (currentPos.next == null && (currentPos.info.compareTo(item) == -1)) {
+                    currentPos.next = new NodeType(item);
+                } // if
+            } // else
+            } // else
     } // insertItem
 
 
+    // method to delete an item from the linked list
     public void deleteItem(ItemType item) {
-        if (getLength() > 1) {
-            predloc = this.head;
-            currentPos = predloc.next;
-        } // if
-        while (currentPos.next != null) {
-            if (currentPos.info.compareTo(item) == 0) {
-                predloc.next = currentPos.next;
-                break;
-            } else {
-                predloc = currentPos;
+        int hasItem = 0;
+        currentPos = this.head;
+        predloc = this.head;
+        if (this.currentPos == null) {
+            System.out.println("\tYou cannot delete from an empty list");
+
+        } else {
+
+            if (getLength() > 1) {
+                predloc = this.head;
                 currentPos = predloc.next;
-            } // else
-        } // while
+            } else if ((getLength() == 1) && (currentPos.info.compareTo(item) == 0)) {
+                this.head = null;
+                currentPos = null;
+                hasItem = 1;
+            } // else if
+            if ((hasItem == 0) && (predloc.info.compareTo(item) == 0)) {
+                this.head = predloc.next;
+                hasItem = 1;
+            } // if
+
+
+            while ((hasItem == 0) && (currentPos.next != null)) {
+                if (currentPos.info.compareTo(item) == 0) {
+                    predloc.next = currentPos.next;
+                    hasItem = 1;
+                    break;
+                } else {
+                    predloc = currentPos;
+                    currentPos = predloc.next;
+                } // else
+
+            } // while
+            if ((hasItem == 0) && (currentPos.next == null) &&
+            (currentPos.info.compareTo(item) == 0)) {
+                predloc.next = null;
+                hasItem = 1;
+            } // if
+            if (hasItem == 0) {
+                System.out.println("\tThe item is not present in the list");
+            } // if
+        } // else
+
     } // deleteItem
+
 
     // method for searching for an item
     public int searchItem(ItemType item) {
 
+        // If list is empty
         if (this.getLength() == 0) {
-            System.out.println("The list is empty");
+            //System.out.println("The list is empty");
             return -1;
         }
         else {
@@ -116,7 +158,7 @@ public class SortedLinkedList {
             while (node.next != null) {
 
                 if (node.info.compareTo(item) == 0) {
-                    System.out.println("The item is present at index " + index);
+                    //System.out.println("The item is present at index " + index);
                     return index;
                 } // if
 
@@ -125,40 +167,52 @@ public class SortedLinkedList {
             } // while
 
             if (node.info.compareTo(item) == 0) {
-                System.out.println("The item is present at index " + index);
+                //System.out.println("The item is present at index " + index);
                 return index;
             } // if
 
-
-            System.out.println("Item is not present in the list");
-            return -1;
+            // If item is not present in the list
+            //System.out.println("Item is not present in the list");
+            return -2;
         } // if - esle
     } // searchItem
 
-
+    // method to get next item
     public ItemType getNextItem() {
-        return null;
+        ItemType item = new ItemType(0);
+        if (this.head == null || currentPos == null) {
+            System.out.println("List is empty");
+            item = null;
+        } else if (currentPos.next == null) {
+            System.out.println("The end of the list has been reached");
+            item = null;
+        } else {
+            item = currentPos.next.info;
+        } // else
+        return item;
     } // getNextItem
 
-
+    // method to reset the linked list
     public void resetList() {
         this.currentPos = null;
         this.head = null;
     } // resetList
 
+
+    // method to merge the list with a new list
     public void merge() {
 
         // Part#1 Ask for length of new list//
-/*------------------------------------------------*/
+        /*----------------------------------*/
         Scanner scan1 = new Scanner(System.in);
         System.out.print("Enter the length of the new list: ");
         int length = scan1.nextInt();
 
 
         //Part#2 Ask for numbers in new list//
-/*------------------------------------------------*/
+        /*----------------------------------*/
         int[] values = new int[length];
-        System.out.print("Enter the new numbers ");
+        System.out.print("Enter the new numbers: ");
 
         SortedLinkedList linkedList = new SortedLinkedList();
 
@@ -168,44 +222,49 @@ public class SortedLinkedList {
         } // for
 
         //Part#3 Print current list//
-/*------------------------------------------------*/
+        /*-------------------------*/
         System.out.print("List 1: ");
         this.printList();
 
         //Part#4 Print new list to be merged//
-/*------------------------------------------------*/
+        /*----------------------------------*/
         System.out.print("List 2: ");
 
         linkedList.printList();
 
-        System.out.println();
 
         //Part#5 Merge the lists//
-/*------------------------------------------------*/
+        /*----------------------*/
         for (int i = 0; i < values.length; i++) {
             this.insertItem(new ItemType(values[i]));
         }
 
         //Part#6 Print merged list//
-/*------------------------------------------------*/
+        /*------------------------*/
         System.out.print("Merged List: ");
          this.printList();
+
+         // removes merged items from list
+         for (int i = 0; i < values.length; i++) {
+             this.deleteItem(new ItemType(values[i]));
+         } // for
     } // merge
 
 
+    // method to find intersection of list and new list
     public void intersection() {
 
       // Part#1 Ask for length of new list//
-/*------------------------------------------------*/
+      /*----------------------------------*/
         Scanner scan1 = new Scanner(System.in);
         System.out.print("Enter the length of the new list: ");
         int length = scan1.nextInt();
 
 
-       // Part#2 Ask for numbers in new list//
-/*------------------------------------------------*/
+      // Part#2 Ask for numbers in new list//
+      /*-----------------------------------*/
         int[] values = new int[length];
-        System.out.print("Enter the new numbers ");
+        System.out.print("Enter the new numbers: ");
 
         SortedLinkedList linkedList = new SortedLinkedList();
 
@@ -216,22 +275,20 @@ public class SortedLinkedList {
 
 
       //Part#3 Print current list//
-/*------------------------------------------------*/
+      /*-------------------------*/
         System.out.print("List 1: ");
         this.printList();
 
 
       //Part#4 Print new list to be merged//
-/*------------------------------------------------*/
+      /*----------------------------------*/
         System.out.print("List 2: ");
 
         linkedList.printList();
 
-        System.out.println();
-
 
       //Part#5 Intersect the lists//
-/*------------------------------------------------*/
+      /*--------------------------*/
 
       linkedList.resetList();
       for (int i = 0; i < values.length; i++) {
@@ -241,11 +298,35 @@ public class SortedLinkedList {
         } // for
 
       //Part#6 Print intersected list//
-/*------------------------------------------------*/
+      /*-----------------------------*/
       System.out.print("Intersection of lists: ");
       linkedList.printList();
 
     } // intersection
 
+
+    // method to delete alternate nodes
+    public void deleteAlternate() {
+        currentPos = this.head;
+        predloc = this.head;
+        while (currentPos != null) {
+            try {
+            currentPos = currentPos.next;
+            NodeType node = currentPos.next;
+            predloc.next = currentPos.next;
+            currentPos = node;
+            predloc = currentPos;
+            } catch (Exception e) {
+                currentPos = null;
+            } // catch
+        } // while
+
+    } // deleteAlternate
+
+    // method to reset the iterator
+    public void resetIterator() {
+      currentPos = head;
+      System.out.println("Iterator is reset");
+    }
 
 } // SortedLinkedList

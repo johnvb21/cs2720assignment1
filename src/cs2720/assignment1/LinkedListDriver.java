@@ -21,9 +21,13 @@ public class LinkedListDriver {
 
             // Taking numbers from the file and adding them to our linkedList. We don't need to
             // worry about sorting here because the linkedList.insert() already does this.
-            while(scan1.hasNext()) {
+
+            do {
+
                 linkedList.insertItem(new ItemType(scan1.nextInt()));
-            } // while
+                linkedList.printList();
+
+            } while(scan1.hasNext());
         } catch (FileNotFoundException e) {
             System.out.print("File not found");
         }
@@ -34,9 +38,8 @@ public class LinkedListDriver {
         // Scanner to read user input.
         Scanner scan2 = new Scanner(System.in);
 
-        while(again) {
 
-            System.out.println();
+      System.out.println();
             System.out.println("Commands:");
             System.out.println("(i) - Insert value");
             System.out.println("(d) - Delete value");
@@ -50,8 +53,9 @@ public class LinkedListDriver {
             System.out.println("(l) - Print length");
             System.out.println("(q) - Quit program");
 
-            System.out.println("Enter a command: ");
+        while(again) {
 
+            System.out.print("Enter a command: ");
             String input = scan2.next();
 
 
@@ -59,44 +63,75 @@ public class LinkedListDriver {
             switch (input) {
 
             case "i":
-                //linkedList.insertItem();
+                Scanner scan3 = new Scanner(System.in);
+                System.out.print("\tEnter a number to insert: ");
+                ItemType item1 = new ItemType(scan3.nextInt());
+                System.out.print("\tOriginal List: ");
+                linkedList.printList();
+                linkedList.insertItem(item1);
+                System.out.print("\tNew List: ");
+                linkedList.printList();
+
                 break;
             case "d":
-                //linkedList.deleteItem();
+                Scanner scan4 = new Scanner(System.in);
+                System.out.print("\tEnter a number to delete: ");
+                ItemType item2 = new ItemType(scan4.nextInt());
+                if (linkedList.getLength() == 0) {
+                    System.out.println("\tYou cannot delete from an empty list");
+                    break;
+                } // if
+                System.out.print("\tOriginal List: ");
+                linkedList.printList();
+                linkedList.deleteItem(item2);
+                System.out.print("\tNew List: ");
+                linkedList.printList();
                 break;
             case "s":
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Enter a number to search: ");
+                System.out.print("\tEnter a number to search: ");
                 int searchValue = scanner.nextInt();
-                linkedList.searchItem(new ItemType(searchValue));
+                int index = linkedList.searchItem(new ItemType(searchValue));
+                System.out.print("\tOriginal List: ");
+                linkedList.printList();
+                if (index == -2) {
+                  System.out.println("\tItem is not present in the array");
+                } else if (index == -1) {
+                  System.out.println("\tThe list is empty");
+                } else {
+                  System.out.println("\tThe item is present at index " + index);
+             }
                 break;
             case "n":
-                System.out.println("You want to print the next iterator value");
+                linkedList.getNextItem();
                 break;
             case "r":
-                System.out.println("You want to reset the iterator");
+                linkedList.resetIterator();
                 break;
             case "a":
-                System.out.println("You want to delete alternate nodes");
+                System.out.print("\tOriginal list: ");
+                linkedList.printList();
+                linkedList.deleteAlternate();
+                System.out.print("\tNew List: ");
+                linkedList.printList();
                 break;
             case "m":
-                System.out.println("You want to merge lists");
                 linkedList.merge();
                 break;
             case "t":
                 linkedList.intersection();
                 break;
-            case "p": System.out.println("The list is: ");
+            case "p": System.out.print("\tThe list is: ");
                 linkedList.printList();
                 break;
-            case "l": System.out.print("The length of the list is ");
-                linkedList.getLength();
+            case "l": System.out.print("\tThe length of the list is ");
+                System.out.println(linkedList.getLength());
                 break;
             case "q":
                 again = false;
                 break;
             default:
-                System.out.println("Invalid command, try again!");
+                System.out.println("\tInvalid command, try again!");
 
             } // switch
 
