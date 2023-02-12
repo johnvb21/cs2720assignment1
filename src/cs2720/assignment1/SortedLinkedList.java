@@ -1,6 +1,7 @@
 package cs2720.assignment1;
 
 import java.util.Scanner;
+import java.lang.Integer;
 
 public class SortedLinkedList {
     private NodeType head;
@@ -234,7 +235,11 @@ public class SortedLinkedList {
 
         for (int i = 0; i < length; i++) {
             values[i] = scan1.nextInt();
+            if ((linkedList.searchItem(new ItemType(values[i])) == -2) ||
+            (linkedList.searchItem(new ItemType(values[i])) == -1)
+                ) {
             linkedList.insertItem(new ItemType(values[i]));
+            } // if
         } // for
 
         String duplicates = "";
@@ -244,11 +249,9 @@ public class SortedLinkedList {
                 (this.searchItem(new ItemType(values[i])) != -2) &&
                 (linkedList.searchItem(new ItemType(values[i])) != -2)
                 ) {
-                duplicates = duplicates + " " + values[i];
+                duplicates = duplicates + values[i] + " ";
             } // if
         } //for
-
-        System.out.println("duplicates: " + duplicates);
 
         //Part#3 Print current list//
         /*-------------------------*/
@@ -266,8 +269,14 @@ public class SortedLinkedList {
         /*----------------------*/
 
         for (int i = 0; i < values.length; i++) {
+
+            if (this.searchItem(new ItemType(values[i])) == -2) {
+
+
             this.insertItem(new ItemType(values[i]));
-        }
+
+            } // if
+        } // for
 
         //Part#6 Print merged list//
         /*------------------------*/
@@ -277,10 +286,28 @@ public class SortedLinkedList {
          // removes merged items from list
 
          for ( int i = 0; i < values.length; i++) {
+             if (this.searchItem(new ItemType(values[i])) != -2) {
              this.deleteItem(new ItemType(values[i]));
+             } // if
          } // for
 
-         // addes back in duplicates
+
+
+
+         // adds back in duplicates
+         String[] duplicateValues = duplicates.split(" ");
+
+         if (duplicateValues[0].equals("") == false) {
+
+             for (int i = 0; i < duplicateValues.length; i++) {
+
+                 if (this.searchItem(new ItemType(Integer.parseInt(duplicateValues[i]))) == -2) {
+                     this.insertItem(new ItemType(Integer.parseInt(duplicateValues[i])));
+                 } // if
+
+             } // for
+
+         } // if
 
 
     } // merge
