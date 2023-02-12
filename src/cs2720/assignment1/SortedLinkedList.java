@@ -92,6 +92,17 @@ public class SortedLinkedList {
                 } // if
             } // else
             } // else
+
+        // special case if length is of list two and new item needs to be inserted between the two
+        if ((this.getLength() == 2) && (head.info.compareTo(item) == -1)
+        && (head.next.info.compareTo(item) == 1)) {
+            NodeType node = new NodeType(item);
+            NodeType temp;
+            temp = head.next;
+            head.next = node;
+            node.next = temp;
+        }
+
     } // insertItem
 
 
@@ -153,7 +164,7 @@ public class SortedLinkedList {
         }
         else {
             NodeType node = head;
-            int index = 0;
+            int index = 1;
 
             while (node.next != null) {
 
@@ -235,6 +246,7 @@ public class SortedLinkedList {
 
         //Part#5 Merge the lists//
         /*----------------------*/
+
         for (int i = 0; i < values.length; i++) {
             this.insertItem(new ItemType(values[i]));
         }
@@ -246,7 +258,20 @@ public class SortedLinkedList {
 
          // removes merged items from list
          for (int i = 0; i < values.length; i++) {
-             this.deleteItem(new ItemType(values[i]));
+             System.out.println(values[i]);
+             if (
+
+                 ((this.searchItem(new ItemType(values[i])) != -1) ||
+                 (this.searchItem(new ItemType(values[i])) != -2)) &&
+                 ((linkedList.searchItem(new ItemType(values[i])) != -1) ||
+                 (linkedList.searchItem(new ItemType(values[i])) != -2))
+
+                 ) {}
+             else {
+                 System.out.println("delete item");
+                 this.deleteItem(new ItemType(values[i]));
+             }
+
          } // for
     } // merge
 
@@ -326,7 +351,7 @@ public class SortedLinkedList {
     // method to reset the iterator
     public void resetIterator() {
       currentPos = head;
-      System.out.println("Iterator is reset");
+      System.out.println("\tIterator is reset");
     }
 
 } // SortedLinkedList
