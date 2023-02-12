@@ -33,12 +33,15 @@ public class SortedLinkedList {
 
     // method for printing the list
     public void printList() {
+
+        NodeType temp = currentPos;
         currentPos = head;
         while (currentPos != null) {
             System.out.print(currentPos.info.getValue() + " ");
             currentPos = currentPos.next;
         } // while
         System.out.println();
+        currentPos = temp;
     } // printList
 
 
@@ -188,20 +191,22 @@ public class SortedLinkedList {
         } // if - esle
     } // searchItem
 
-    // method to get next item
+// method to get next item
     public ItemType getNextItem() {
         ItemType item = new ItemType(0);
         if (this.head == null || currentPos == null) {
             System.out.println("List is empty");
             item = null;
-        } else if (currentPos.next == null) {
+        } else if (currentPos == null) {
             System.out.println("The end of the list has been reached");
             item = null;
         } else {
             item = currentPos.next.info;
+            currentPos = currentPos.next;
         } // else
         return item;
     } // getNextItem
+
 
     // method to reset the linked list
     public void resetList() {
@@ -232,6 +237,19 @@ public class SortedLinkedList {
             linkedList.insertItem(new ItemType(values[i]));
         } // for
 
+        String duplicates = "";
+
+        for (int i = 0; i < values.length; i++) {
+            if (
+                (this.searchItem(new ItemType(values[i])) != -2) &&
+                (linkedList.searchItem(new ItemType(values[i])) != -2)
+                ) {
+                duplicates = duplicates + " " + values[i];
+            } // if
+        } //for
+
+        System.out.println("duplicates: " + duplicates);
+
         //Part#3 Print current list//
         /*-------------------------*/
         System.out.print("List 1: ");
@@ -257,22 +275,14 @@ public class SortedLinkedList {
          this.printList();
 
          // removes merged items from list
-         for (int i = 0; i < values.length; i++) {
-             System.out.println(values[i]);
-             if (
 
-                 ((this.searchItem(new ItemType(values[i])) != -1) ||
-                 (this.searchItem(new ItemType(values[i])) != -2)) &&
-                 ((linkedList.searchItem(new ItemType(values[i])) != -1) ||
-                 (linkedList.searchItem(new ItemType(values[i])) != -2))
-
-                 ) {}
-             else {
-                 System.out.println("delete item");
-                 this.deleteItem(new ItemType(values[i]));
-             }
-
+         for ( int i = 0; i < values.length; i++) {
+             this.deleteItem(new ItemType(values[i]));
          } // for
+
+         // addes back in duplicates
+
+
     } // merge
 
 
@@ -315,17 +325,21 @@ public class SortedLinkedList {
       //Part#5 Intersect the lists//
       /*--------------------------*/
 
-      linkedList.resetList();
-      for (int i = 0; i < values.length; i++) {
-          if (this.searchItem(new ItemType(values[i])) != -1) {
-            linkedList.insertItem(new ItemType(values[i]));
-          } // if
-        } // for
+        SortedLinkedList intersectedList = new SortedLinkedList();
+
+        for (int i = 0; i < values.length; i++) {
+
+      if ((this.searchItem(new ItemType(values[i])) != -2) &&
+      (linkedList.searchItem(new ItemType(values[i])) != -2)) {
+          intersectedList.insertItem(new ItemType(values[i]));
+
+      }
+      }
 
       //Part#6 Print intersected list//
       /*-----------------------------*/
       System.out.print("Intersection of lists: ");
-      linkedList.printList();
+      intersectedList.printList();
 
     } // intersection
 

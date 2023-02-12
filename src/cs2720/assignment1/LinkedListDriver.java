@@ -25,7 +25,6 @@ public class LinkedListDriver {
             do {
 
                 linkedList.insertItem(new ItemType(scan1.nextInt()));
-                linkedList.printList();
 
             } while(scan1.hasNext());
         } catch (FileNotFoundException e) {
@@ -103,7 +102,10 @@ public class LinkedListDriver {
              }
                 break;
             case "n":
-                linkedList.getNextItem();
+                ItemType item = linkedList.getNextItem();
+                if (item != null) {
+                    System.out.println(item.getValue());
+                } // if
                 break;
             case "r":
                 linkedList.resetIterator();
